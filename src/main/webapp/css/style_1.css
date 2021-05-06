@@ -1,0 +1,122 @@
+
+.buscar { grid-area: buscar; }
+.ingresar { grid-area: ingresar; }
+.tabla { grid-area: tabla; }
+.salida { grid-area: salida; }
+
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+
+        'buscar buscar buscar buscar buscar buscar'
+        'ingresar tabla tabla tabla tabla tabla'
+        'salida tabla tabla tabla tabla tabla';
+
+}
+input[type=reset],
+input[type=submit],
+input[type=buscar]{
+    width: 170px;
+    height: 40px;
+    color:#0b073d;
+    font-size: 20px;
+    font-weight: bolder;
+    background-image: linear-gradient(#a3c0c9 40%,#0b073d 100%);
+}
+
+input{
+    width: 150px;
+    height: 20px;
+    color: #0b073d;
+}
+
+input[type=reset]:hover,
+input[type=submit]:hover{
+    color: #f5eadf;
+
+
+}
+#registros th {
+    align-content: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    border-color:#1d2654;
+    background-image: linear-gradient( #f5eadf 70%,#0b073d 100%);
+    color:#0b073d;
+}
+.buscar{
+    background-color:#1d2654;
+    color: #edd2c5;
+    margin-left: 20px;
+    font-weight: bolder;
+    font-style: inherit;
+}
+
+.buscar .label{
+    width: 260px;
+
+}
+.ingresar td{
+    color: #0b073d;
+}
+
+.ingresar{
+    background-color: #aca6b0;
+    padding-left:10px;
+    color: #0b073d;
+    }
+
+
+#busqueda td{
+    padding-right:  10px;
+}
+
+.tabla{
+    background-color: #f5eadf;
+    color: #1d2654;
+    overflow: auto;
+    max-height: 565px;
+
+}
+
+.tabla tr:nth-child(even){
+    background-color: #edd2c5;
+}
+
+.tabla tr:hover {
+    background-color: #aca6b0;
+}
+
+body{
+    background-color: #1d2654;
+}
+
+h1{
+    color:#edd2c5;
+    text-align: center;
+}
+
+h2{
+    color: #0b073d;
+    text-align: center;
+    font-size: inherit;
+}
+.salida{
+    background-color: #edd2c5;
+    border: 10px solid #aca6b0;
+    color:#0b073d;
+}
+
+select{
+    height: 30px;
+    color:#0b073d;
+}
+
+option{
+    width: 125px;
+    color:#0b073d;
+}
+
+
