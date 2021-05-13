@@ -17,16 +17,26 @@
         <%
     String tabla = "";
 
-    String buscarDescripcion=request.getParameter("buscarDescripcion");
-    if(buscarDescripcion==null) buscarDescripcion="";
-    String buscarTemporada=request.getParameter("buscarTemporada");
-    if(buscarTemporada==null) buscarTemporada="";
-     String buscarTipo=request.getParameter("buscarTipo");
-    if(buscarTipo==null) buscarTipo="";
-     String buscarTalle=request.getParameter("buscarTalle");
-    if(buscarTalle==null) buscarTalle="";
-     String buscarColor=request.getParameter("buscarColor");
-    if(buscarColor==null) buscarColor="";
+    String buscarDescripcion = request.getParameter("buscarDescripcion");
+    if( buscarDescripcion == null)
+        buscarDescripcion = "";
+    
+    String buscarTemporada = request.getParameter("buscarTemporada");
+    if(buscarTemporada == null)
+        buscarTemporada = "";
+    
+    String buscarTipo = request.getParameter("buscarTipo");
+    if(buscarTipo == null)
+        buscarTipo = "";
+    
+    String buscarTalle = request.getParameter("buscarTalle");
+    if(buscarTalle == null)
+        buscarTalle = "";
+    
+    String buscarColor = request.getParameter("buscarColor");
+    if(buscarColor == null)
+        buscarColor="";
+    
     try (ResultSet rs=Connector
             .getConnection()
             .createStatement()
@@ -36,14 +46,13 @@
                         + "and temporada like '%"+ buscarTemporada+"%'"
                         + "and tipo like '%"+ buscarTipo+"%'"
                         + "and talle_num like '%"+ buscarTalle+"%'"
-                        + "and color like '%"+ buscarColor+"%'"
-
-
-            )){
+                        + "and color like '%"+ buscarColor+"%'"))
+    {
         tabla += "<table  id='registros'>";
         tabla += "<tr><th>Id</th><th>Descripcion</th><th>Tipo</th><th>Color</th>"
                 + "<th>Talle/num</th><th>Stock</th><th>StockMin</th>"
                 + "<th>StockMax</th><th>Costo</th><th>Precio</th><th>Temporada</th></tr>";
+        
         while(rs.next()){
             tabla += "<tr>";
             tabla += "<td>"+rs.getInt("id")+"</td>";
@@ -62,27 +71,23 @@
         tabla += "</table>";
 
     } catch (Exception e) {
-      tabla = e.toString();
+        tabla = e.toString();
     }
-            %>
 
-            <%
     String respuesta = "";
     try {
-    String descripcion=request.getParameter("descripcion");
-    String tipo=request.getParameter("tipo");
-    String color=request.getParameter("color");
-    String talle_num=request.getParameter("talle_num");
-    int stock=Integer.parseInt(request.getParameter("stock"));
-    int stockMin=Integer.parseInt(request.getParameter("stockMin"));
-    int stockMax=Integer.parseInt(request.getParameter("stockMax"));
-    Double costo=Double.parseDouble(request.getParameter("costo"));
-    Double precio=Double.parseDouble(request.getParameter("precio"));
-    String temporada=request.getParameter("temporada");
+        String descripcion=request.getParameter("descripcion");
+        String tipo=request.getParameter("tipo");
+        String color=request.getParameter("color");
+        String talle_num=request.getParameter("talle_num");
+        int stock=Integer.parseInt(request.getParameter("stock"));
+        int stockMin=Integer.parseInt(request.getParameter("stockMin"));
+        int stockMax=Integer.parseInt(request.getParameter("stockMax"));
+        Double costo=Double.parseDouble(request.getParameter("costo"));
+        Double precio=Double.parseDouble(request.getParameter("precio"));
+        String temporada=request.getParameter("temporada");
 
-
-
-    try(PreparedStatement ps=Connector
+        try(PreparedStatement ps = Connector
            .getConnection()
            .prepareStatement(
                "insert into articulos "
@@ -92,8 +97,8 @@
            )){
             ps.setString(1,descripcion);
             ps.setString(2,tipo);
-             ps.setString(3,color);
-             ps.setString(4,talle_num);
+            ps.setString(3,color);
+            ps.setString(4,talle_num);
             ps.setInt(5,stock);
             ps.setInt(6,stockMin);
             ps.setInt(7,stockMax);
@@ -102,22 +107,25 @@
             ps.setString(10,temporada);
 
             ps.execute();
+
             ResultSet rs=ps.getGeneratedKeys();
             int id=0;
-            if(rs.next()) id=rs.getInt(1);
-            if(id==0){
+
+            if(rs.next())
+                id = rs.getInt(1);
+
+            if(id == 0){
                 respuesta = "No se pudo dar de alta el registro";
-            }else{
+            } else {
                 respuesta = "Se guardo el articulo id: "+id;
             }
+        } catch (Exception e) {
+            respuesta = e.toString();
+        }
     } catch (Exception e) {
-       respuesta = e.toString();
+        respuesta = "*Los campos son obligatorios ";
     }
-
-    } catch (Exception e) {
-    respuesta = "*Los campos son obligatorios ";
-    }
-            %>
+    %>
         <div class="grid-container">
             <div class="buscar">
                 <h1>MANTENIMIENTO DE ARTICULOS</h1>
@@ -129,9 +137,20 @@
                             <td><input type="text" name="buscarDescripcion" value="" /></td>
 
                             <td>por temporada:</td>
-                            <td><input type="text" name="buscarTemporada" value="" /></td>
+                            <td>
+                                <select name="buscarTemporada" value="">
+                                    <option value="VERANO" selected >VERANO</option>
+                                    <option value="OTOÑO">OTOÑO</option>
+                                    <option value="INVIERNO">INVIERNO</option>
+                                </select>
+                            </td>
                             <td>por tipo:</td>
-                            <td><input type="text" name="buscarTipo" value="" /></td>
+                            <td>
+                                <select name="buscarTipo" value="">
+                                    <option value="CALZADO" selected >CALZADO</option>
+                                    <option value="ROPA">ROPA</option>                            
+                                </select>
+                            </td>
                         </tr>
                         <tr>
                             <td></td>
@@ -216,7 +235,7 @@
             </div> 
             <div class="tabla">                                     
                 <%
-                out.println(tabla);
+                    out.println(tabla);
                 %>
             </div>
         </div>
